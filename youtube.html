@@ -1,0 +1,924 @@
+<html>
+
+<head>
+
+  <title>
+    YouTube
+  </title>
+  <link rel="icon" type="image" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: rgb(248, 248, 248);
+      margin: 0;
+      padding-top: 80px;
+      padding-left: 95px;
+      padding-right: 24px;
+    }
+
+    .sidebar {
+      background-color: white;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      bottom: 0;
+      width: 72px;
+      z-index: 200;
+      padding-top: 5px;
+    }
+
+    .sidebar-link {
+      height: 74px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .sidebar-link:hover {
+      background-color: rgb(235, 235, 235);
+    }
+
+    .sidebar-link img {
+      height: 25px;
+      margin-bottom: 5px;
+    }
+
+    .sidebar-link div {
+      font-family: Roboto, Arial;
+      font-size: 10px;
+    }
+
+    @media (max-width: 1200px) {
+      .sidebar {
+          width: 72px;
+        }
+    }
+
+    @media (max-width: 1201px) {
+        .sidebar {
+            width: 100px;
+        }
+    }
+
+    .header {
+      background-color: white;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(230, 230, 230);
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      height: 55px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .right-section {
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .middle-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      max-width: 500px;
+      margin-right: 40px;
+      margin-left: 50px;
+    }
+
+    .search-bar {
+      flex: 1;
+      height: 40px;
+      font-size: 16px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(192, 192, 192);
+      border-radius: 2px;
+      box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.05);
+      padding-left: 10px;
+      width: 0;
+      flex-shrink: 1;
+    }
+
+    .search-icon {
+      height: 30px;
+      width: 30px;
+    }
+
+    .voice-icon {
+      height: 25px;
+    }
+
+    .search-bar::placeholder {
+      font-family: Roboto, Arial;
+      font-size: 16px;
+    }
+
+    .hamburger {
+      width: 24px;
+      margin-left: 20px;
+      margin-right: 24px;
+    }
+
+    .youtube {
+      width: 100px;
+    }
+
+    .search-button {
+      height: 40px;
+      width: 66px;
+      border-color: rgb(192, 192, 192);
+      background-color: rgb(240, 240, 240);
+      border-width: 1px;
+      border-style: solid;
+      margin-left: -1px;
+      margin-right: 10px;
+    }
+
+    .search-button,
+    .voice-button,
+    .upload-container,
+    .apps-container,
+    .notifications-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-button .tooltip,
+    .voice-button .tooltip,
+    .upload-container .tooltip,
+    .apps-container .tooltip,
+    .notifications-container .tooltip {
+      font-family: Roboto, Arial;
+      position: absolute;
+      background-color: gray;
+      color: white;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-right: 8px;
+      padding-left: 8px;
+      border-radius: 2px;
+      font-size: 12px;
+      bottom: -30px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .search-button:hover .tooltip,
+    .voice-button:hover .tooltip,
+    .upload-container:hover .tooltip,
+    .apps-container:hover .tooltip,
+    .notifications-container:hover .tooltip {
+      opacity: 1;
+    }
+
+    .voice-button {
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      border: none;
+      background-color: rgb(248, 248, 248);
+    }
+
+    .upload-icon {
+      height: 24px;
+    }
+
+    .youtube-apps {
+      height: 24px;
+    }
+
+    .notifications-icon {
+      height: 24px;
+    }
+
+    .notifications-container {
+      position: relative;
+    }
+
+    .notifications-count {
+      position: absolute;
+      top: -2px;
+      right: -4px;
+      background-color: rgb(200, 0, 0);
+      color: white;
+      font-family: Roboto, Arial;
+      font-size: 11px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      padding-left: 6px;
+      padding-right: 6px;
+      border-radius: 10px;
+    }
+
+    .user-picture {
+      height: 35px;
+      border-radius: 16px;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      column-gap: 15px;
+      row-gap: 43px;
+    }
+
+    @media (max-width: 1200px) {
+      .videos-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 1130px) {
+      .videos-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .videos-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 630px) {
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .video {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-bottom: 0px;
+    }
+
+    .thumbnail-row {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .video-time {
+      background-color: black;
+      color: white;
+      position: absolute;
+      bottom: 8px;
+      right: 5px;
+      font-family: Roboto, Arial;
+      font-size: 12px;
+      font-weight: 500;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 4px;
+      padding-right: 4px;
+      border-radius: 2px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      column-gap: 8px;
+    }
+
+    p {
+      font-family: Roboto, Arial;
+      color: gray;
+      font-size: 14px;
+      margin: 0;
+      margin-bottom: 4px;
+    }
+
+    .profile-image {
+      border-radius: 100px;
+      width: 36px;
+      cursor: pointer;
+    }
+
+    .channel-image {
+      position: relative;
+    }
+
+    .hover-flex {
+      position: absolute;
+      bottom: -25px;
+      background-color: white;
+      display: flex;
+      width: 200px;
+      flex-direction: row;
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+      justify-content: start;
+      align-items: center;
+      z-index: 300;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-right: 8px;
+      padding-left: 8px;
+      border-radius: 3px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+
+    .channel-image:hover .hover-flex {
+      opacity: 1;
+    }
+
+    .hover-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .hover-info .hover-name {
+      font-family: Roboto, Arial;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .hover-stats {
+      font-family: Roboto, Arial;
+      font-size: 13px;
+      color: gray;
+    }
+
+    .video-thumbnail {
+      width: 100%;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .video-title {
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    .stats-video {
+      line-height: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="left-section">
+      <img src="	https://supersimple.dev/exercises/youtube/icons/hamburger-menu.svg" alt="image" class="hamburger">
+      <img src="	https://supersimple.dev/exercises/youtube/icons/youtube-logo.svg" alt="image" class="youtube">
+    </div>
+    <div class="middle-section">
+      <input type="text" placeholder="Search" class="search-bar">
+      <button class="search-button">
+        <img src="	https://supersimple.dev/exercises/youtube/icons/search.svg" class="search-icon" alt="image">
+        <div class="tooltip">Search</div>
+      </button>
+      <button class="voice-button">
+        <img src="	https://supersimple.dev/exercises/youtube/icons/voice-search-icon.svg" alt="image" class="voice-icon">
+        <div class="tooltip">Search with your voice</div>
+      </button>
+    </div>
+    <div class="right-section">
+      <div class="upload-container">
+        <img src="https://supersimple.dev/exercises/youtube/icons/upload.svg" alt="image" class="upload-icon">
+        <div class="tooltip">Create</div>
+      </div>
+      <div class="apps-container">
+        <img src="	https://supersimple.dev/exercises/youtube/icons/youtube-apps.svg" alt="image" class="youtube-apps">
+        <div class="tooltip">YouTube apps</div>
+      </div>
+      <div class="notifications-container">
+        <img src="https://supersimple.dev/exercises/youtube/icons/notifications.svg" alt="image" class="notifications-icon">
+        <div class="notifications-count">3</div>
+        <div class="tooltip">Notifications</div>
+      </div>
+      <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/my-channel.jpeg" alt="image" class="user-picture">
+    </div>
+  </header>
+  <nav class="sidebar">
+    <div class="sidebar-link">
+      <img src="https://supersimple.dev/exercises/youtube/icons/home.svg" alt="home">
+      <div>Home</div>
+    </div>
+    <div class="sidebar-link">
+      <img src="	https://supersimple.dev/exercises/youtube/icons/explore.svg" alt="explore">
+      <div>Explore</div>
+    </div>
+    <div class="sidebar-link">
+      <img src="https://supersimple.dev/exercises/youtube/icons/subscriptions.svg" alt="subscriptions">
+      <div>Subscriptions</div>
+    </div>
+    <div class="sidebar-link">
+      <img src="	https://supersimple.dev/exercises/youtube/icons/originals.svg" alt="originals">
+      <div>Originals</div>
+    </div>
+    <div class="sidebar-link">
+      <img src="https://supersimple.dev/exercises/youtube/icons/youtube-music.svg" alt="youtube-music">
+      <div>YouTube Music</div>
+    </div>
+    <div class="sidebar-link">
+      <img src="	https://supersimple.dev/exercises/youtube/icons/library.svg" alt="library">
+      <div>Library</div>
+    </div>
+  </nav>
+  <main>
+    <section class="videos-grid">
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=n2RNcPRtAiY"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-1.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">14:20</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-1.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-1.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Marques Brownlee
+                </div>
+                <div class="hover-stats">
+                  20.5M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Talking Tech and AI with Google CEO Sundar Pichai!
+              </p>
+            </div>
+            <div>
+              <p>
+                Marques Brownlee
+              </p>
+            </div>
+            <div>
+              <p>
+                3.4M views · 6 months ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=mP0RAo9SKZk"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-2.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">8:22</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-2.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-2.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Markiplier
+                </div>
+                <div class="hover-stats">
+                  37.9M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Try Not To Laugh Challenge #9 will make you Laugh
+              </p>
+            </div>
+            <div>
+              <p>
+                Markiplier
+              </p>
+            </div>
+            <div>
+              <p>
+                19M views · 4 years ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=FgjPQQeTh1w"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-3.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">9:13</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-3.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-3.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  SSSniperWolf
+                </div>
+                <div class="hover-stats">
+                  35.1M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Crazy Tik Toks Taken Moments Before DISASTER
+              </p>
+            </div>
+            <div>
+              <p>
+                SSSniperWolf
+              </p>
+            </div>
+            <div>
+              <p>
+                12M views · 1 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=094y1Z2wpJg"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-4.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">22:09</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-4.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-4.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Veritasium
+                </div>
+                <div class="hover-stats">
+                  19.4M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                The Simplest Math Problem No One Can Solve - Collatz...
+              </p>
+            </div>
+            <div>
+              <p>
+                Veritasium
+              </p>
+            </div>
+            <div>
+              <p>
+                18M views · 4 months ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=86CQq3pKSUw"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-5.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">11:17</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-5.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-5.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  CS Dojo
+                </div>
+                <div class="hover-stats">
+                  1.95M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Kadane's Algorithm to Maximum Sum Subarray
+              </p>
+            </div>
+            <div>
+              <p>
+                CS Dojo
+              </p>
+            </div>
+            <div>
+              <p>
+                519K views · 5 years ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=yXWw0_UfSFg"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-6.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">19:59</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-6.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-6.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  MrBeast
+                </div>
+                <div class="hover-stats">
+                  449M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Anything You Can Fit In The Circle I’ll Pay For
+              </p>
+            </div>
+            <div>
+              <p>
+                MrBeast
+              </p>
+            </div>
+            <div>
+              <p>
+                141M views · 1 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=fNVa1qMbF9Y"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-7.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">10:13</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-7.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-7.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  RealLifeLore
+                </div>
+                <div class="hover-stats">
+                  7.87M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Why Planes Don't Fly Over Tibet
+              </p>
+            </div>
+            <div>
+              <p>
+                RealLifeLore
+              </p>
+            </div>
+            <div>
+              <p>
+                6.6M views · 1 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=lFm4EM1juls"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-8.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">7:12</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-8.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-8.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Tech Vision
+                </div>
+                <div class="hover-stats">
+                  845K subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Inside The World's Biggest Passenger Plane
+              </p>
+            </div>
+            <div>
+              <p>
+                Tech Vision
+              </p>
+            </div>
+            <div>
+              <p>
+                3.7M views · 10 months ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=ixmxOlcrlUc"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-9.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">13:17</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-9.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-9.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  ThenX
+                </div>
+                <div class="hover-stats">
+                  7.83M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                The SECRET to Super Human STRENGTH. See it to KNOW!
+              </p>
+            </div>
+            <div>
+              <p>
+                ThenX
+              </p>
+            </div>
+            <div>
+              <p>
+                20M views · 3 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=R2vXbFp5C9o"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-10.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">7:53</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="	https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-10.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-10.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Business Insider
+                </div>
+                <div class="hover-stats">
+                  10.2M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                How The World's Largest Cruise Ship Makes 30,000 Meals Every Day
+              </p>
+            </div>
+            <div>
+              <p>
+                Business Insider
+              </p>
+            </div>
+            <div>
+              <p>
+                14M views · 1 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=0nZuYyXET3s"><img src="	https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-11.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">4:10</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-11.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-11.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  Destination Tips
+                </div>
+                <div class="hover-stats">
+                  282K subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                Dubai's Crazy Underwater Train and Other Things #Only in Dubai
+              </p>
+            </div>
+            <div>
+              <p>
+                Destination Tips
+              </p>
+            </div>
+            <div>
+              <p>
+                3M views · 1 year ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video">
+        <div class="thumbnail-row">
+          <a href="https://www.youtube.com/watch?v=9iMGFqMmUFs"><img src="https://supersimple.dev/exercises/youtube/thumbnails/thumbnail-12.webp" alt="Thumbnail" class="video-thumbnail"></a>
+          <div class="video-time">4:51</div>
+        </div>
+        <div class="info-grid">
+          <div class="channel-image">
+            <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-12.jpeg" alt="Channel" class="profile-image">
+            <div class="hover-flex">
+              <img src="https://supersimple.dev/exercises/youtube/channel-profile-pics/channel-12.jpeg" class="hover-image">
+              <div class="hover-info">
+                <div class="hover-name">
+                  TED-Ed
+                </div>
+                <div class="hover-stats">
+                  22.1M subscirbers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div>
+              <p class="video-title">
+                What would happen if you didn’t drink water? - Mia Nacamulli
+              </p>
+            </div>
+            <div>
+              <p>
+                TED-Ed
+              </p>
+            </div>
+            <div>
+              <p>
+                12M views · 5 years ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
